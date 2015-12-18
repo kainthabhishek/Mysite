@@ -1,0 +1,83 @@
+.jumbotron
+{
+background-color: white;
+height:170px;
+width:100%;
+padding-bottom: 0px;
+padding-top: 0px;
+margin-bottom: 0px;
+text-align: center;
+color: #A9A9A9	;
+font-family: Helvetica Neue !important;
+}
+.col-sm-4
+{
+	background-color: white;
+	height: 460px;
+}
+
+body
+{
+	background-color: white;
+}
+table
+{
+	width:100%;
+	height:100%;
+	border-spacing: 5px;
+	border-collapse: separate;
+	background-color:white;
+
+}
+tbody{
+}
+td
+{	width: 33.33%;
+	height: 33.33%;
+	background-color: #ffc966;
+	border-radius: 5px;
+	text-align: center;
+}
+
+
+.zero
+{   
+	color: white;
+	font-size:108px !important;
+}
+.zerosub
+{   
+	color: #A9A9A9;
+	font-size:108px !important;
+}
+.cross
+{   
+	color: white;
+	font-size:108px !important;
+}
+.crosssub
+{   
+	color: #A9A9A9;
+	font-size:108px !important;
+}
+.result
+{
+	color:#A9A9A9;
+	text-align: center;
+}
+.user
+{
+	font-size: 108px !important;
+}
+.computer
+{
+	font-size: 108px !important;
+	margin-left: 340px;
+}
+.shift
+{   position: relative;
+}
+.initial_warn
+{
+	color: #ffc966;
+}
