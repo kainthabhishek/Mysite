@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'xogame#index'
+  get '/2048' => 'game2048#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

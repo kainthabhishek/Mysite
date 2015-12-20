@@ -1,0 +1,92 @@
+.jumbotron
+{
+	text-align: center;
+	background-color: white;
+	color:#ffc966;
+}
+.col-sm-4
+{
+	height:460px;
+}
+table
+{
+	width:100%;
+	height:100%;
+	border-spacing: 10px;
+	border-collapse: separate;
+	background-color:#A9A9A9;
+	border-radius: 10px; 
+}
+
+td
+{
+	background-color: #DCDCDC;
+	height: 23%;
+	width: 20%;
+	border-radius: 10px; 
+
+}
+.score
+{
+	font-size: 20px;
+	color:#ffc966;
+}
+.c
+{
+	height: 100%;
+	width: 100%;
+	border-radius: 10px;
+	text-align: center;
+    vertical-align: middle;
+    line-height: 90px;
+    font-size: 25px;
+}
+
+._0
+{
+
+}
+._2
+{
+    background-color: #ffffe5 ;
+}
+._4
+{
+    background-color:#ffffb2;
+}
+._8
+{
+    background-color:#ffdb99;
+}
+._16
+{
+    background-color:#ffc966;
+}
+._32
+{
+    background-color:#adebad;
+}
+._64
+{
+    background-color:#6fdc6f;
+}
+._128
+{
+    background-color:#ffb2b2;
+}
+._256
+{
+    background-color:#ff7f7f;
+}
+._512
+{
+    background-color:#e5e5ff;
+}
+._1024
+{
+    background-color:#b2b2ff;
+}
+._2048
+{
+    background-color:#bba3d0;
+}
