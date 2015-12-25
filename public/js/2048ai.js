@@ -1,94 +1,157 @@
-$(document).ready(function(){
-	var board=new Array(4);
-	var score= new Object();
-     score.scor=0;
-	board=boardinitializer(board);
-    var move= new Object();
-	boardprint(board,score);
-	$(document).keydown(function(e)
-	{   if(e.which==38||e.which==39||e.which==40||e.which==37)
-		{e.preventDefault();
-		var key=e.which;
-		if(key==38)
-		moveup(board,score);
-	    if(key==40)
-	    movedown(board,score);
-	    if(key==37)
-	    moveleft(board,score);
-	    if(key==39)
-	    moveright(board,score);}
-	    if(e.which==65)
-	    {
-	    			move=automate(board);
-
-	    if(move.mov==1)
-		moveup(board,score);
-	    if(move.mov==2)
-	    movedown(board,score);
-	    if(move.mov==3)
-	    moveleft(board,score);
-	    if(move.mov==4)
-	    moveright(board,score);	
-	    }	
-
-	    randomfiller(board);
-        boardprint(board,score);
-	});
-});
-
-function boardprint(board,score)
-{   
-	for(var i=0;i<4;i++)
-		for(var j=0;j<4;j++)
-		{
-			var pos=i*4+j+1;
-			var cell=$(('.cell_'+pos).toString());
-			cell.removeClass();
-			cell.addClass(('c cell_'+pos+' _'+board[i][j]).toString());
-            if(board[i][j])
-			cell.text(board[i][j].toString());
-		    else
-		    cell.text("");
-
-		}
-
-	$('.live').text((score.scor).toString());	
-}
-
-function boardinitializer(board)
-{   
-	for(var i=0;i<4;i++)
-		board[i]=new Array(4);
-
-	for(var i=0;i<4;i++)
-		for(var j=0;j<4;j++)
-			board[i][j]=0;
-    
-	randomfiller(board);	
-    return board;
-}
-function randomfiller(board)
+function automate(board)
 {
-	var xs =new Array(17);
-	var ys =new Array(17);
-	var total=0;
+	var boardcpy=new Array(4);
+	for(var i=0;i<4;i++)
+		boardcpy[i]=new Array(4);
+    
+    for(var i=0;i<4;i++)
+		for(var j=0;j<4;j++)
+			boardcpy[i][j]=board[i][j];
+    var depth=0;
+    var move=new Object();
+	move=automatehelper(boardcpy,depth);
+	//alert(move.mov);
+	return move;	
+}
+
+function automatehelper(board,depth)
+{   //alert(depth);
+	var move=new Object();
+	if(depth==3)
+    { move2=new Object();
+    	move2.score=0;
+    	move2.mov=1;
+		return move2;
+	}
+	var temp1=0,temp2,temp3,temp4;
+	var boardcpy=new Array(4);
+    for(var p=0;p<4;p++)
+    	boardcpy[p]=new Array(4);
+
+    var temptys1=9000;
+    for(var p=0;p<4;p++)
+		for(var q=0;q<4;q++)
+			boardcpy[p][q]=board[p][q];
+	temp1=moveup_(boardcpy,0);
+	for(var i=0;i<4;i++)
+		for(var j=0;j<4;j++)
+		if(!boardcpy[i][j])
+		{
+			boardcpy[i][j]=2;
+			var move2=new Object();
+			 move2=automatehelper(boardcpy,depth+1);
+			var min_sol=move2.score;
+			if(temptys1>=min_sol)
+			{
+				temptys1=min_sol;
+			}
+			boardcpy[i][j]=0;
+		}
+    for(var p=0;p<4;p++)
+		for(var q=0;q<4;q++)
+			boardcpy[p][q]=board[p][q];
+            //alert(boardcpy[0][0]+" "+boardcpy[0][1]+" "+boardcpy[0][2]+" "+boardcpy[0][3]+" "+boardcpy[1][0]+" "+boardcpy[1][1]+" "+boardcpy[1][2]+" "+boardcpy[1][3]+" "+boardcpy[2][0]+" "+boardcpy[2][1]+" "+boardcpy[2][2]+" "+boardcpy[2][3]+" "+boardcpy[3][0]+" "+boardcpy[3][1]+" "+boardcpy[3][2]+" "+boardcpy[3][3]);
+
+    var temptys2=9000;
+	temp2=movedown_(boardcpy,0);
 
 	for(var i=0;i<4;i++)
 		for(var j=0;j<4;j++)
+		if(!boardcpy[i][j])
 		{
-			if(!board[i][j])
+			boardcpy[i][j]=2;
+            var move2=new Object();
+			 move2=automatehelper(boardcpy,depth+1);
+			var min_sol=move2.score;
+			if(temptys2>=min_sol)
 			{
-				xs[total]=i;
-				ys[total++]=j;
+				temptys2=min_sol;
 			}
+			boardcpy[i][j]=0;
 		}
-	var selected =	Math.floor((Math.random() * total));
-	var ran_input=[2,2,4,2,2];
-    var ran_input_pos=Math.floor((Math.random() * 5));
-    var filler=ran_input[ran_input_pos];
-    board[xs[selected]][ys[selected]]=filler;
+
+	for(var p=0;p<4;p++)
+		for(var q=0;q<4;q++)
+			boardcpy[p][q]=board[p][q];
+    var temptys3=9000;
+	temp3=moveleft_(boardcpy,0);
+
+	for(var i=0;i<4;i++)
+		for(var j=0;j<4;j++)
+		if(!boardcpy[i][j])
+		{
+			boardcpy[i][j]=2;
+			var move2=new Object();
+			 move2=automatehelper(boardcpy,depth+1);
+			var min_sol=move2.score;
+			if(temptys3>=min_sol)
+			{
+				temptys3=min_sol;
+			}
+			boardcpy[i][j]=0;
+		}
+
+	 for(var p=0;p<4;p++)
+		for(var q=0;q<4;q++)
+			boardcpy[p][q]=board[p][q];
+    var temptys4=9000;
+	temp4=moveright_(boardcpy,0);
+
+	for(var i=0;i<4;i++)
+		for(var j=0;j<4;j++)
+		if(!boardcpy[i][j])
+		{
+			boardcpy[i][j]=2;
+			var move2=new Object();
+			 move2=automatehelper(boardcpy,depth+1);
+			var min_sol=move2.score;
+			if(temptys4>=min_sol)
+			{
+				temptys4=min_sol;
+			}
+			boardcpy[i][j]=0;
+		}
+	move.score=0;
+	if(temptys1>=9000)temptys1=0;
+	if(temptys2>=9000)temptys2=0;
+	if(temptys3>=9000)temptys3=0;
+	if(temptys4>=9000)temptys4=0;
+	temptys1+=temp1;
+	temptys2+=temp2;
+	temptys3+=temp3;
+	temptys4+=temp4;
+	
+	{
+	  if(temp1&&move.score<=temptys1)	
+	  { 
+	  	move.score=temptys1;
+	  	move.mov=1;
+	  }
+	  if(temp2&&move.score<=temptys2)	
+	  { 
+	  	move.score=temptys2;
+	  	move.mov=2;
+	  }
+	  if(temp3&&move.score<=temptys3)	
+	  { 
+	  	move.score=temptys3;
+	  	move.mov=3;
+	  }
+	  if(temp4&&move.score<=temptys4)	
+	  { 
+	  	move.score=temptys4;
+	  	move.mov=4;
+	  }
+	}
+	/*else
+	{
+		move.score=Math.max(Math.max(temptys1,temptys2),Math.max(temptys3,temptys4));
+	}*/		
+    //if(depth==0)alert(temptys1+" "+temptys2+" "+temptys3+" "+temptys4)
+	return move;				
 }
-function moveup(board,score)
+
+function moveup_(board,score)
 {   var temp=new Array(4);
 	
 	for(var j=0;j<4;j++)
@@ -114,7 +177,7 @@ function moveup(board,score)
     		if(board[i][j]==board[i-1][j])
     		{  
     			board[i-1][j]*=2;
-    			score.scor+=board[i-1][j];
+    			score+=board[i-1][j];
     			board[i][j]=0;
     		}
     	}
@@ -136,9 +199,10 @@ function moveup(board,score)
 	        	board[i][j]=temp[i];
 	        }   
         }
-
+        return score;     
+   
 }
-function movedown(board,score)
+function movedown_(board,score)
 {   var temp=new Array(4);
 	
 	for(var j=0;j<4;j++)
@@ -164,7 +228,7 @@ function movedown(board,score)
     		if(board[i][j]==board[i+1][j])
     		{
     			board[i+1][j]*=2;
-    			score.scor+=board[i+1][j];
+    			score+=board[i+1][j];
     			board[i][j]=0;
     		}
     	}
@@ -186,8 +250,9 @@ function movedown(board,score)
 	        	board[i][j]=temp[3-i];
 	        }   
         }
+        return score;         
 }
-function moveleft(board,score)
+function moveleft_(board,score)
 {   var temp=new Array(4);
 	
 	for(var i=0;i<4;i++)
@@ -213,7 +278,7 @@ function moveleft(board,score)
     		if(board[i][j]==board[i][j-1])
     		{
     			board[i][j-1]*=2;
-    			score.scor+=board[i][j-1];
+    			score+=board[i][j-1];
     			board[i][j]=0;
     		}
     	}
@@ -235,8 +300,9 @@ function moveleft(board,score)
 	        	board[i][j]=temp[j];
 	        }   
         }
+        return score;     
 }
-function moveright(board,score)
+function moveright_(board,score)
 {   var temp=new Array(4);
 	
 	for(var i=0;i<4;i++)
@@ -262,7 +328,7 @@ function moveright(board,score)
     		if(board[i][j]==board[i][j+1])
     		{
     			board[i][j+1]*=2;
-    		    score.scor+=board[i][j+1];
+    		    score+=board[i][j+1];
     			board[i][j]=0;
     		}
     	}
@@ -284,4 +350,5 @@ function moveright(board,score)
 	        	board[i][j]=temp[3-j];
 	        }   
         }
+    return score;     
 }
