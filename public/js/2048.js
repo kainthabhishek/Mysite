@@ -1,26 +1,37 @@
 $(document).ready(function(){
 	var board=new Array(4);
 	var score= new Object();
+	var moveit=["up","down","left","right"];
      score.scor=0;
 	board=boardinitializer(board);
     var move= new Object();
 	boardprint(board,score);
+	var cp=0;
+	
+    function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 	$(document).keydown(function(e)
 	{   if(e.which==38||e.which==39||e.which==40||e.which==37)
 		{e.preventDefault();
 		var key=e.which;
 		if(key==38)
-		moveup(board,score);
+		moveup(board,score),$('.moveit').text("up");
 	    if(key==40)
-	    movedown(board,score);
+	    movedown(board,score),$('.moveit').text("down");
 	    if(key==37)
-	    moveleft(board,score);
+	    moveleft(board,score),$('.moveit').text("left");
 	    if(key==39)
-	    moveright(board,score);}
+	    moveright(board,score),$('.moveit').text("right");}
 	    if(e.which==65)
 	    {
-	    			move=automate(board);
-
+	    
+	    move=automate(board);
 	    if(move.mov==1)
 		moveup(board,score);
 	    if(move.mov==2)
@@ -30,9 +41,9 @@ $(document).ready(function(){
 	    if(move.mov==4)
 	    moveright(board,score);	
 	    }	
-
 	    randomfiller(board);
         boardprint(board,score);
+        $('.moveit').text(moveit[move.mov-1]);
 	});
 });
 
@@ -52,7 +63,8 @@ function boardprint(board,score)
 
 		}
 
-	$('.live').text((score.scor).toString());	
+	$('.live').text((score.scor).toString());
+	return 1;	
 }
 
 function boardinitializer(board)
@@ -82,11 +94,14 @@ function randomfiller(board)
 				ys[total++]=j;
 			}
 		}
+	if(total!=0)
+	{	
 	var selected =	Math.floor((Math.random() * total));
-	var ran_input=[2,2,4,2,2];
+	var ran_input=[2,2,2,2,2];
     var ran_input_pos=Math.floor((Math.random() * 5));
     var filler=ran_input[ran_input_pos];
-    board[xs[selected]][ys[selected]]=filler;
+
+    board[xs[selected]][ys[selected]]=filler;}
 }
 function moveup(board,score)
 {   var temp=new Array(4);
