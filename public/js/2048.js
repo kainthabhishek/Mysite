@@ -7,7 +7,7 @@ $(document).ready(function(){
     var move= new Object();
 	boardprint(board,score);
 	var cp=0;
-	
+
     function sleep(milliseconds) {
   var start = new Date().getTime();
   for (var i = 0; i < 1e7; i++) {
@@ -20,14 +20,48 @@ $(document).ready(function(){
 	{   if(e.which==38||e.which==39||e.which==40||e.which==37)
 		{e.preventDefault();
 		var key=e.which;
+		var boardcpy=new Array(4);
+        for(var i=0;i<4;i++)
+    	boardcpy[i]=new Array(4);
 		if(key==38)
-		moveup(board,score),$('.moveit').text("up");
+		{   set_to(boardcpy,board);
+    	    makemove(boardcpy,1);
+    	    var tscore=compareboard(boardcpy,board);
+    	    if(tscore)
+			moveup(board,score),$('.moveit').text("up"),randomfiller(board);
+		    else
+		    	$('.moveit').text("notpossible");
+
+		}
 	    if(key==40)
-	    movedown(board,score),$('.moveit').text("down");
+	    {   
+	    	set_to(boardcpy,board);
+    	    makemove(boardcpy,2);
+    	    var tscore=compareboard(boardcpy,board);
+    	    if(tscore)
+	    	movedown(board,score),$('.moveit').text("down"),randomfiller(board);
+	        else
+		    	$('.moveit').text("notpossible");
+	    }
 	    if(key==37)
-	    moveleft(board,score),$('.moveit').text("left");
+	    {   set_to(boardcpy,board);
+    	    makemove(boardcpy,3);
+    	    var tscore=compareboard(boardcpy,board);
+    	    if(tscore)
+	    	moveleft(board,score),$('.moveit').text("left"),randomfiller(board);
+	        else
+		    	$('.moveit').text("notpossible");
+	    }
 	    if(key==39)
-	    moveright(board,score),$('.moveit').text("right");}
+	    {   set_to(boardcpy,board);
+    	    makemove(boardcpy,4);
+    	    var tscore=compareboard(boardcpy,board);
+    	    if(tscore)
+	    	moveright(board,score),$('.moveit').text("right"),randomfiller(board);
+	        else
+		    	$('.moveit').text("notpossible");
+	    }
+	    }	
 	    if(e.which==65)
 	    {
 	    
@@ -39,11 +73,12 @@ $(document).ready(function(){
 	    if(move.mov==3)
 	    moveleft(board,score);
 	    if(move.mov==4)
-	    moveright(board,score);	
+	    moveright(board,score);
+	    randomfiller(board);	
+	    $('.moveit').text(moveit[move.mov-1]);
 	    }	
-	    randomfiller(board);
+	    
         boardprint(board,score);
-        $('.moveit').text(moveit[move.mov-1]);
 	});
 });
 

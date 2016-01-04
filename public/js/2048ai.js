@@ -90,7 +90,7 @@ function automatehelper(board,depth,move)
 	move.mov=0;
 	score=score_counter(board);
 	move.score=score;	
-	if(depth==6)
+	if(depth==8)
 		return move;
     
     var boardcpy=new Array(4);
